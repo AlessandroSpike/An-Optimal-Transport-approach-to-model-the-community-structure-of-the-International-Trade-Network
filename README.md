@@ -180,6 +180,3 @@ If you use this code in your research, please cite the paper:
 *"An Optimal Transport approach to model the community structure of the International Trade Network"*.
 
 ---
-
-## License
-This project is licensed under the MIT License. See the `LICENSE` file for details.
