@@ -1,0 +1,62 @@
+
+R version 4.3.1 (2023-06-16 ucrt) -- "Beagle Scouts"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # Load necessary libraries
+> library(fixest)
+Warning message:
+package 'fixest' was built under R version 4.3.3 
+> library(dplyr)
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+package 'dplyr' was built under R version 4.3.2 
+> 
+> 
+> # Load the dataset
+> data <- read.csv("E:/NullModel/Codici/final/FinalMagari/Soc_Net/DatiR.csv")
+> # Load the dataset
+> dataShock <- read.csv("E:/NullModel/Codici/final/FinalMagari/Soc_Net/DatiRShock.csv")
+> 
+> # PPML estimation with fixed effects
+> modello <- feglm(
++   Var1 ~ Var2 + Var3 + Var4 + Var5 + Var6 + Var7 + Var8 + Var9 + Var10 + Var11 + Var12 + Var13 + Var14 + Var15,
++   data = data,
++   family = poisson(),
++ )
+NOTE: 198 observations removed because of infinite values (RHS: 198).
+> predetti <- predict(modello, newdata = data)
+> predettiShock <- predict(modello, newdata = dataShock)
+> 
+> write.csv(predetti, "E:/NullModel/Codici/final/FinalMagari/Soc_Net/Fit.csv")
+> write.csv(predettiShock, "E:/NullModel/Codici/final/FinalMagari/Soc_Net/FitShock.csv")
+> 
+> proc.time()
+   user  system elapsed 
+   1.56    0.29    1.92 
