@@ -71,7 +71,9 @@ switch GravType
         CoefficientiFIXED_BIN=Coefficienti;
         StandardErrFIXED_BIN=StandardErr;
 
-        
+        load Panel.mat
+        CoefficientiPanel=Coefficienti;
+        CoefficientiPanel(CoefficientiPanel==0)=nan;
 
         singolo=2;
 end
@@ -203,7 +205,7 @@ if singolo==1
 else
 
     figure
-    subplot(2,2,[1 3])
+    subplot(3,2,[1 3 5])
     [incSort, sortPos] = sort(mean(CoefficientiZIP(2:end,:),2));
     barh(1:2:numel(incSort), incSort(1:2:end), "FaceColor", "b", "BarWidth", 0.4, "FaceAlpha", 0.5)
     hold on
@@ -214,7 +216,7 @@ else
     axis tight
     grid on
     set(findall(gcf,'-property','FontSize'),'FontSize',12)
-    subplot(2,2,2)
+    subplot(3,2,2)
     [incSort, sortPos] = sort(mean(CoefficientiFIXED(2:end,:),2));
     tolgo=isnan(incSort);
     incSort(tolgo)=[];
@@ -230,7 +232,7 @@ else
     title('Fixed Effect')
     set(findall(gcf,'-property','FontSize'),'FontSize',12)
     sgtitle('Average Coefficient Values')
-    subplot(2,2,4)
+    subplot(3,2,4)
     [incSort, sortPos] = sort(mean(CoefficientiFIXED_BIN(2:end,:),2));
     tolgo=isnan(incSort);
     incSort(tolgo)=[];
@@ -248,6 +250,22 @@ else
     sgtitle('Average Coefficient Values')
 
 
+    subplot(3,2,6)
+    [incSort, sortPos] = sort(CoefficientiPanel(2:end));
+    tolgo=isnan(incSort);
+    incSort(tolgo)=[];
+    sortPos(tolgo)=[];
+    barh(1:2:numel(incSort), incSort(1:2:end), "FaceColor", "b", "BarWidth", 0.4, "FaceAlpha", 0.5)
+    hold on
+    barh(2:2:numel(incSort), incSort(2:2:end), "FaceColor", "r", "BarWidth", 0.4, "FaceAlpha", 0.5)
+    nodeNames = VarName(sortPos);
+    yticks(1:numel(nodeNames))
+    yticklabels(nodeNames)
+    axis tight
+    grid on
+    title('Panel T. C.  F.E')
+    set(findall(gcf,'-property','FontSize'),'FontSize',12)
+    sgtitle('Average Coefficient Values')
 
 
     C = orderedcolors('sail');
